@@ -75,6 +75,12 @@
     <ClCompile Include="CAR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CSubtractiveSynthesizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CChorusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio\DirSound.h">
@@ -144,6 +150,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSubtractiveSynthesizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CChorusEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

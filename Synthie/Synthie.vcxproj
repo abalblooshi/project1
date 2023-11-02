@@ -132,9 +132,11 @@
     <ClCompile Include="audio\DirSoundStream.cpp" />
     <ClCompile Include="CAR.cpp" />
     <ClCompile Include="CAudioNode.cpp" />
+    <ClCompile Include="CChorusEffect.cpp" />
     <ClCompile Include="CInstrument.cpp" />
     <ClCompile Include="CNote.cpp" />
     <ClCompile Include="CSineWave.cpp" />
+    <ClCompile Include="CSubtractiveSynthesizer.cpp" />
     <ClCompile Include="CSynthesizer.cpp" />
     <ClCompile Include="CToneInstrument.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -157,9 +159,11 @@
     <ClInclude Include="audio\DirSoundStream.h" />
     <ClInclude Include="CAR.h" />
     <ClInclude Include="CAudioNode.h" />
+    <ClInclude Include="CChorusEffect.h" />
     <ClInclude Include="CInstrument.h" />
     <ClInclude Include="CNote.h" />
     <ClInclude Include="CSineWave.h" />
+    <ClInclude Include="CSubtractiveSynthesizer.h" />
     <ClInclude Include="CSynthesizer.h" />
     <ClInclude Include="CToneInstrument.h" />
     <ClInclude Include="MainFrm.h" />

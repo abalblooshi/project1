@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CToneInstrument.h"
 #include "Notes.h"
+#include "CSineWave.h"
 
 CToneInstrument::CToneInstrument(void)
 {
@@ -25,6 +26,15 @@ void CToneInstrument::Start()
 
 bool CToneInstrument::Generate()
 {
+    // Generate wave
+    double sample = GenerateSquareWave(m_time);  
+
+    // reson filter
+    sample = ApplyResonFilter(sample);
+
+    // envelope
+    sample = ApplyEnvelope(m_time, sample);
+
     bool valid = m_ar.Generate();
 
     m_frame[0] = m_ar.Frame(0);
@@ -82,4 +92,33 @@ void CToneInstrument::SetNote(CNote* note)
         }
 
     }
+}
+
+double CToneInstrument::ApplyResonFilter(double input)
+{
+    static double y1 = 0, y2 = 0;
+    double output = input - y1 - y2;
+    y2 = y1;
+    y1 = output;
+    return output;
+}
+
+double CToneInstrument::ApplyEnvelope(double time, double input)
+{
+    double envelope = 0;
+    if (time < m_attackTime)
+        envelope = time / m_attackTime;
+    else if (time < (m_attackTime + m_decayTime))
+        envelope = 1.0 - (time - m_attackTime) / m_decayTime * (1.0 - m_sustainLevel);
+    else
+        envelope = m_sustainLevel;
+
+    return input * envelope;
+}
+
+double CToneInstrument::GenerateSquareWave(double time)
+{
+    double period = 1.0 / m_freq;
+    double value = fmod(time, period) < period / 2 ? 1.0 : -1.0;
+    return value;
 }

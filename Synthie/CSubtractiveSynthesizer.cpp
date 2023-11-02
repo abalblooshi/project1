@@ -1,22 +1,20 @@
 #include "pch.h"
 #include <string>
 #include <algorithm>
-#include "CSynthesizer.h"
+#include "CSubtractiveSynthesizer.h"
 #include "CToneInstrument.h"
 #include "xmlhelp.h"
-#include "CChorusEffect.h"
-
 
 using namespace std;
 
 
-CSynthesizer::CSynthesizer(void)
+CSubtractiveSynthesizer::CSubtractiveSynthesizer(void)
 {
     CoInitialize(NULL);
 
-	m_channels = 2;
-	m_sampleRate = 44100.;
-	m_samplePeriod = 1 / m_sampleRate;
+    m_channels = 2;
+    m_sampleRate = 44100.;
+    m_samplePeriod = 1 / m_sampleRate;
     m_time = 0;
 
     m_bpm = 120;
@@ -25,7 +23,7 @@ CSynthesizer::CSynthesizer(void)
 }
 
 //! Start the synthesizer
-void CSynthesizer::Start(void)
+void CSubtractiveSynthesizer::Start(void)
 {
     m_instruments.clear();
     m_currentNote = 0;
@@ -35,7 +33,7 @@ void CSynthesizer::Start(void)
 }
 
 //! Generate one audio frame
-bool CSynthesizer::Generate(double* frame)
+bool CSubtractiveSynthesizer::Generate(double* frame)
 {
 
     //
@@ -156,14 +154,6 @@ bool CSynthesizer::Generate(double* frame)
         m_measure++;
     }
 
-    /*CChorusEffect chorus(sampleRate)*/
-
-    //for (int c = 0; c < numChannels; c++) {
-    //    applyNoiseGate(frame[c]);
-    //    applyRingModulation(frame[c], time);
-    //    chorus.applyChorus(frame[c], time);
-    //}   
-
     //
     // Phase 5: Determine when we are done
     //
@@ -173,13 +163,13 @@ bool CSynthesizer::Generate(double* frame)
     return !m_instruments.empty() || m_currentNote < (int)m_notes.size();
 }
 
-void CSynthesizer::Clear(void)
+void CSubtractiveSynthesizer::Clear(void)
 {
     m_instruments.clear();
     m_notes.clear();
 }
 
-void CSynthesizer::OpenScore(CString& filename)
+void CSubtractiveSynthesizer::OpenScore(CString& filename)
 {
     Clear();
 
@@ -227,7 +217,7 @@ void CSynthesizer::OpenScore(CString& filename)
     sort(m_notes.begin(), m_notes.end());
 }
 
-void CSynthesizer::XmlLoadScore(IXMLDOMNode* xml)
+void CSubtractiveSynthesizer::XmlLoadScore(IXMLDOMNode* xml)
 {
 
     // Get a list of all attribute nodes and the
@@ -286,7 +276,7 @@ void CSynthesizer::XmlLoadScore(IXMLDOMNode* xml)
     }
 }
 
-void CSynthesizer::XmlLoadInstrument(IXMLDOMNode* xml)
+void CSubtractiveSynthesizer::XmlLoadInstrument(IXMLDOMNode* xml)
 {
     wstring instrument = L"";
 
@@ -335,15 +325,8 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode* xml)
 
 }
 
-void CSynthesizer::XmlLoadNote(IXMLDOMNode* xml, std::wstring& instrument)
+void CSubtractiveSynthesizer::XmlLoadNote(IXMLDOMNode* xml, std::wstring& instrument)
 {
     m_notes.push_back(CNote());
     m_notes.back().XmlLoad(xml, instrument);
-}
-
-
-void applyNoiseGate(float& sample) {
-    if (std::abs(sample) < 0.02) {
-        sample = 0.0f;
-    }
 }
